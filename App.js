@@ -27,26 +27,22 @@ const App = () => {
   ]);
 
   return (
-    <ScrollView
-      style={styles.body}
+
+    <FlatList
+      keyExtractor={(item, index) => index.toString()}
+      data={Items}
+      renderItem={({ item }) => (
+        <View style={styles.item} key={Object.key}>
+          <Text style={{ color: 'white', fontSize: 20, padding: 10 }}>{item.item}</Text>
+        </View>
+      )}
       refreshControl={
         <RefreshControl
           refreshing={Refreshing}
           onRefresh={onRefresh}
         />
       }
-    >
-      <FlatList
-        keyExtractor={(item, index) => index.toString()}
-        data={Items}
-        renderItem={({ item }) => (
-          <View style={styles.item} key={Object.key}>
-            <Text style={{ color: 'white', fontSize: 20, padding: 10 }}>{item.item}</Text>
-          </View>
-        )}
-      />
-
-    </ScrollView >
+    />
   );
 };
 

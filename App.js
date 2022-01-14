@@ -1,48 +1,45 @@
 import { StatusBar } from "expo-status-bar";
 import { useState } from "react";
-import { FlatList, RefreshControl, ScrollView, StyleSheet, Text, View } from "react-native";
+import { FlatList, RefreshControl, SafeAreaView, ScrollView, SectionList, StyleSheet, Text, View } from "react-native";
 
 
 const App = () => {
-  const [Refreshing, setRefreshing] = useState(false);
-  const onRefresh = () => {
-    setRefreshing(true);
-    setItems([...Items, { key: 14, item: 'Item 14' }]);
-    setRefreshing(false);
-  }
-  const [Items, setItems] = useState([
-    { item: 'Item 1' },
-    { item: 'Item 2' },
-    { item: 'Item 3' },
-    { item: 'Item 4' },
-    { item: 'Item 5' },
-    { item: 'Item 6' },
-    { item: 'Item 7' },
-    { item: 'Item 8' },
-    { item: 'Item 9' },
-    { item: 'Item 10' },
-    { item: 'Item 11' },
-    { item: 'Item 13' },
-    { item: 'Item 12' },
-  ]);
+  const DATA = [
+    {
+      title: "Main dishes",
+      data: ["Pizza", "Burger", "Risotto"]
+    },
+    {
+      title: "Sides",
+      data: ["French Fries", "Onion Rings", "Fried Shrimps"]
+    },
+    {
+      title: "Drinks",
+      data: ["Water", "Coke", "Beer"]
+    },
+    {
+      title: "Desserts",
+      data: ["Cheese Cake", "Ice Cream"]
+    }
+  ];
 
   return (
+    <SafeAreaView>
+      <SectionList
+        sections={DATA}
+        keyExtractor={(item, index) => index.toString()}
+        renderItem={({ item }) => (
+          <View style={styles.item} key={Object.key}>
+            <Text style={{ color: 'white', fontSize: 20, padding: 10 }}>{item}</Text>
+          </View>
+        )}
+        renderSectionHeader={({ section: { title } }) => (
+          <Text style={{ color: 'black', fontSize: 20, padding: 10, textAlign: 'center' }}>{title}</Text>
+        )}
+      >
 
-    <FlatList
-      keyExtractor={(item, index) => index.toString()}
-      data={Items}
-      renderItem={({ item }) => (
-        <View style={styles.item} key={Object.key}>
-          <Text style={{ color: 'white', fontSize: 20, padding: 10 }}>{item.item}</Text>
-        </View>
-      )}
-      refreshControl={
-        <RefreshControl
-          refreshing={Refreshing}
-          onRefresh={onRefresh}
-        />
-      }
-    />
+      </SectionList>
+    </SafeAreaView>
   );
 };
 
